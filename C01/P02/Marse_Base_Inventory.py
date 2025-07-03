@@ -10,7 +10,7 @@ try:
         for line in file2:
             timestamp, event, message = line.split(',')
             date, time = timestamp.split(' ')
-            arr.append([date, time, event, message])
+            arr.append([date, time, event, message.strip()])
 
 #전환된 list 객체를 화면에 출력
     for info in arr:
