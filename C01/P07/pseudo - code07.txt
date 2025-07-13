@@ -1,0 +1,90 @@
+Analysis - Design - Code - Test
+
+> 문제상황:
+1. 직접 센서 데이터의 결과를 출력하고 내용을 확인할 수 있게 구성 필요.
+2. 기지 내외부의 온도, 광량, 이산화탄소의 농도, 산소 농도등을 확인 할 수 있게 구성 해야함.
+
+> 조건
+미션 컴퓨터에 해당하는 클래스를 생성. class_name = MissionComputer로 정의
+미션 컴퓨터에는 화성 기지의 환경에 대한 값을 저장할 수 있는 사전(Dict) 객체가 env_values라는 속성으로 포함되어야 한다.
+attribute <env_values> dict. {key : value}
+key = {mars_base_internal_temperature
+mars_base_external_temperature
+mars_base_internal_humidity
+mars_base_external_illuminance
+mars_base_internal_co2
+mars_base_internal_oxygen}
+
+P03_class DummySensor 
+(instant) ds = DummySensor_class 
+MissionComputer에 add method(get_sensor_data()) 
+
+def get_sensor_data() - method
+> add 3 function
+1. 센서의 값을 가져와서 env_values에 담는다.
+2. env_values의 값을 출력한다. (3.이때 환경 정보의 값은 json 형태로 화면에 출력한다.)
+*위의 두 가지 동작을 5초에 한번씩 반복
+
+(instant) RunComputer = MissionComputer()_class
+RunComputer 인스턴스의 get_sensor_data() 메소드를 호출해서 
+지속적으로 환경에 대한 값을 출력 할 수 있도록 한다.
+save as 'mars_mission_computer.py'
+
+>
+특정 키를 입력할 경우 반복적으로 출력되던 화성 기지의 환경에 대한 출력을 멈추고 ‘Sytem stoped….’ 를 출력 할 수 있어야 한다.
+5분에 한번씩 각 환경값에 대한 5분 평균 값을 별도로 출력한다.
+
+> 제약 사항
+Python에서 기본 제공되는 명령어만 사용해야 하며 별도의 라이브러리나 패키지를 사용해서는 안된다.
+단 시간을 다루는 라이브러리는 사용 가능하다.
+Python의 coding style guide를 확인하고 가이드를 준수해서 코딩한다.
+경고 메시지 없이 모든 코드는 실행 되어야 한다.
+
+
+[작업 순서도]
+1. Create the class (name : MissionComputer):
+- include env_values({dict. key:value})
+
+import datetime
+
+try:
+    class MissionComputer
+
+        def __init__(self):
+            env_values = {}
+            
+        def get_sensor_data():
+            env_values = {
+            'mars_base_internal_temperature' : value, 'mars_base_external_temperature' : value,
+            'mars_base_internal_humidity' : value, 'mars_base_external_illuminance' : value,
+            'mars_base_internal_co2' : value, 'mars_base_internal_oxygen' : value}
+            print(env_value)
+            
+            >>
+            1. import the sensor's values and save in to the env_values.
+            2. print values(env_values)(3. print value(environment_info) as json type.
+            *조건_R2 : repeat 5times (1,2) / input (certain_key) - stop the R2 and print('Sytem stoped…')
+
+    # 이 부분 P03에서 불러와야 함. (같은 파일 시, from mars_mission_computer import DummySensor)
+
+    ds = DummySensor()
+
+    RunComputer = MissionComputer() : get_sensor_data, 지속적으로 환경에 대한 값을 출력할 수 있도록 설정.
+    print(env_value)
+    print(각 환경값에 대한 5분 평균 값)
+
+    #save as 'mars_mission_computer.py'
+
+except FileNotFoundError: 
+    print('파일이 존재하지 않음.')
+except Exception as e:
+    print('파일 처리 중 오류가 발생.', e)
+
+
+2. 
+try:
+
+except FileNotFoundError: 
+    print('파일이 존재하지 않음.')
+except Exception as e:
+    print('파일 처리 중 오류가 발생.', e)
