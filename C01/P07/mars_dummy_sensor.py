@@ -14,9 +14,9 @@ try:
             'mars_base_internal_co2' : random.uniform(0.02, 0.1),'mars_base_internal_oxygen' : random.randint(4, 7)}
 
         def get_env(self):
-            self.set_env() 
+            self.set_env() # +
             
-            with open('mars_sensor_log.txt', 'a') as f: #log file+
+            with open('mars_sensor_log.txt', 'a', encoding='utf-8') as f: #automatically create a log file
                 now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 env_log = (f'날짜 및 시간 : {now}, '
                     f'내부 온도 : {self.env_values["mars_base_internal_temperature"]}, '
@@ -26,17 +26,13 @@ try:
                     f'내부 CO2농도 : {self.env_values["mars_base_internal_co2"]:.3f}, '
                     f'내부 O2농도 : {self.env_values["mars_base_internal_oxygen"]}\n')
                 f.write(env_log)
-
-                #print(env_log)
                 return self.env_values
 
 
     ds = DummySensor()
 
     ds.set_env()
-    print(ds.get_env())
-    print('mars_sensor_log.txt')
-    #save
+    print(ds.get_env()) # print value 
 
 except FileNotFoundError: 
     print('파일이 존재하지 않음.')

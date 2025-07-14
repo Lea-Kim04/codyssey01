@@ -39,24 +39,50 @@ python에서 기본 제공되는 명령어 이외의 별도의 라이브러리�
 모든 라이브러리는 안정된 마지막 버전을 사용해야 한다.
 
 [작업 순서도]
-save the file as 'mars_mission_computer.py'
+import info - cheak - edit code(create 'setting.txt' for setting with printed attributes) 
+=> analyse the status of Mission Computer
 
-from mars_mission_P07 imprt MissionComputer
+0. import os
 
-    def __init__(self):
-        self.os_sistem_info = {}
-        self.t_info = {}
+1. Create the method : get_mission_computer_info()
+add to class MissionComputer_P07_mars_dummy_sensor.py
 
-    def get_mission_computer_info(self)
-        self.os_sistem_info = {'운영체계' : (value) , '운영체계 버전' : (value) , 'CPU의 타입' : (value) , 'CPU의 코어 수' : (value) , '메모리의 크기' : (value) }
+1-2. get_mission_computer_info()
+*needed info (Mission Computer os)
+운영체계
+운영체계 버전
+CPU의 타입
+CPU의 코어 수
+메모리의 크기
 
-    get_mission_computer_load(self)
-        self.t_info = {'CPU 실시간 사용량' : (value), '메모리 실시간 사용량' : (value)}
-        print(json.dumps(os_sistem_info, indent=None))
+1-3. sistem_info = info_get_mission_computer_info()
+include the code : print(json.dump(sistem_info, indent=None))
 
-runComputer = MissionComputer()
+2-1. Create the method : get_mission_computer_load()
+add to class MissionComputer
 
+2-2. get_mission_computer_load()
+*bring_info  
+CPU 실시간 사용량
+메모리 실시간 사용량
+
+2-3. load_values = result_get_mission_computer_load()
+add the code : print(json.dumpa(load_values, indent=None))
+
+3. runComputer = MissionComputer()
+
+4. import
 runComputer.get_mission_computer_info()
 runComputer.get_mission_computer_load()
-print(runComputer.get_mission_computer_info)
+
+5. print
+print(runComputer.get_mission_computer_info())
+print(runComputer.get_mission_computer_load())
+
+6. save
+save as 'mars_mission_computer.py'
+
+7. ++
+Create the file : 'setting.txt'
+edit the code to setting the attributes in the printed information.
 

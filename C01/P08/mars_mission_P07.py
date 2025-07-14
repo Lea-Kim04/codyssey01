@@ -4,7 +4,7 @@ from mars_dummy_sensor import DummySensor
 
 def check_stop(value: str):
     if value == 'q':
-        print('Sytem stoped…')
+        print('System stopped…')
         return True #stop
     return False
 
@@ -51,5 +51,3 @@ except FileNotFoundError:
     print('파일이 존재하지 않음.')
 except Exception as e:
     print('파일 처리 중 오류가 발생.', e)
-
-  #save file as 'mars_mission_computer.py'
