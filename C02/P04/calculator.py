@@ -13,7 +13,7 @@ class Calculator:
 
         self.reset() 
 
-    def reset(self): #04
+    def reset(self):
         self.current = '0'
         self.total = 0.0
         self.operator = ''
@@ -21,7 +21,7 @@ class Calculator:
         self.has_decimal = False
         return self.current
 
-    def negative_positive(self): #04
+    def negative_positive(self):
         if self.current and self.current != '0' and self.current != "Error":
             if self.current.startswith('-'):
                 self.current = self.current[1:]
@@ -29,7 +29,7 @@ class Calculator:
                 self.current = '-' + self.current
         return self._format_result(self.current)
 
-    def percent(self): #04
+    def percent(self):
         if self.current and self.current != '0' and self.current != "Error":
             try:
                 value = float(self.current) / 100
@@ -71,7 +71,7 @@ class Calculator:
             self.has_decimal = True
         return self._format_result(self.current)
 
-    def set_operator(self, op): 
+    def _set_operator_internal(self, op):
         if self.current == "Error":
             return self.current 
         
@@ -85,8 +85,19 @@ class Calculator:
         self.has_decimal = False 
         return self._format_result(self.total) 
 
+    def add(self):
+        return self._set_operator_internal('+')
+
+    def subtract(self):
+        return self._set_operator_internal('-')
+
+    def multiply(self):
+        return self._set_operator_internal('x')
+
+    def divide(self):
+        return self._set_operator_internal('÷')
+
     def equal(self):
-        """'=' 버튼이 눌렸을 때 최종 계산을 수행합니다."""
         if self.current == "Error":
             return self.current
 
@@ -103,7 +114,6 @@ class Calculator:
         return result_to_display
 
     def _calculate_intermediate(self):
-        """내부적으로 현재 값과 연산자에 따라 계산을 수행합니다."""
         if self.current == "Error": 
             self.total = 0.0
             return
@@ -136,7 +146,6 @@ class Calculator:
             self.has_decimal = False
 
     def _format_result(self, value):
-        """UI에 표시하기 좋게 결과값을 포맷하고, 길이 제한을 적용합니다."""
         if value == "Error":
             return "Error"
         
@@ -169,15 +178,13 @@ class CalculatorUI(QMainWindow):
         self.main_layout.addStretch() 
 
         self.display = QLineEdit()
-        self.display.setReadOnly(True) # 읽기 전용
-        self.display.setAlignment(Qt.AlignRight) # 오른쪽 정렬
-        # 아이폰 계산기 스타일 폰트 및 크기, 색상
+        self.display.setReadOnly(True) 
+        self.display.setAlignment(Qt.AlignRight) 
         self.display.setStyleSheet("font-size: 80px; font-weight: 300; color: white; border: none; background-color: black;")
-        self.display.setText(self.calculator.current) # Calculator 초기값으로 화면 설정
+        self.display.setText(self.calculator.current) 
         self.main_layout.addWidget(self.display)
         self.main_layout.addLayout(self.grid_layout)
 
-        # 버튼 정의 (텍스트, 색상 종류)
         self.buttons = [
             ('AC', 'light-grey'), ('+/-', 'light-grey'), ('%', 'light-grey'), ('÷', 'orange'),
             ('7', 'dark-grey'), ('8', 'dark-grey'), ('9', 'dark-grey'), ('x', 'orange'),
@@ -185,10 +192,9 @@ class CalculatorUI(QMainWindow):
             ('1', 'dark-grey'), ('2', 'dark-grey'), ('3', 'dark-grey'), ('+', 'orange'),
             ('0', 'dark-grey'), ('.', 'dark-grey'), ('=', 'orange')
         ]
-        self.create_buttons() # 버튼 생성 및 배치
+        self.create_buttons() 
 
     def create_buttons(self):
-        """버튼을 생성하고 GridLayout에 배치합니다."""
         row = 0
         col = 0
         for button_text, color in self.buttons:
@@ -199,7 +205,7 @@ class CalculatorUI(QMainWindow):
                 button.setStyleSheet("QPushButton { background-color: #D4D4D2; color: black; border-radius: 40px; font-size: 30px; }")
             elif color == 'orange':
                 button.setStyleSheet("QPushButton { background-color: #FF9500; color: white; border-radius: 40px; font-size: 30px; }")
-            else: # dark-grey
+            else:
                 button.setStyleSheet("QPushButton { background-color: #505050; color: white; border-radius: 40px; font-size: 30px; }")
 
             button.clicked.connect(lambda _, text=button_text: self.on_button_click(text))
@@ -228,8 +234,14 @@ class CalculatorUI(QMainWindow):
             result = self.calculator.negative_positive()
         elif text == '%': 
             result = self.calculator.percent()
-        elif text in ['+', '-', 'x', '÷']:
-            result = self.calculator.set_operator(text)
+        elif text == '+':
+            result = self.calculator.add()
+        elif text == '-':
+            result = self.calculator.subtract()
+        elif text == 'x':
+            result = self.calculator.multiply()
+        elif text == '÷':
+            result = self.calculator.divide()
         elif text == '=': 
             result = self.calculator.equal()
         
