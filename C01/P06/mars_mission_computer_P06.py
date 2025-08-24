@@ -9,9 +9,9 @@ try:
 
         def set_env(self):
             self.env_values = {
-            'mars_base_internal_temperature' : random.randint(18, 30), 'mars_base_external_temperature' : random.randint(0, 21),
+            'mars_base_internal_temperature' : random.randint(18, 30), 'mars_base_external_temperature' : random.randint(0, 21), #정수
             'mars_base_internal_humidity' : random.randint(50, 60), 'mars_base_external_illuminance' : random.randint(500, 715),
-            'mars_base_internal_co2' : random.uniform(0.02, 0.1),'mars_base_internal_oxygen' : random.randint(4, 7)}
+            'mars_base_internal_co2' : round(random.uniform(0.02, 0.1),3),'mars_base_internal_oxygen' : random.randint(4, 7)} #실수
 
         def get_env(self):
             with open('mars_sensor_log.txt', 'a', encoding='utf-8') as f: #log file+
@@ -29,10 +29,10 @@ try:
                 return self.env_values
 
 
-    ds = DummySensor()
+    ds = DummySensor() #class
 
     ds.set_env()
-    print(ds.get_env())
+    # print(ds.get_env()) ---- data print시, 주석제거
     # print value + create 'mars_sensor_log.txt'(auto)
 
 except FileNotFoundError: 

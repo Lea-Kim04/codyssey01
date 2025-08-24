@@ -5,7 +5,7 @@ try:
     with open("C:\\Users\\jin_y\\Downloads\\codyssey\\C01\\P03\\Mars_Base_Inventory_List.csv", 'r', encoding = 'utf-8') as file1:
         for line in file1:
             print(line.strip())
-# Flammability_descending
+# Flammability_descending  
         print('----- 정렬_Flammability : 내림차순 -----')
 
         arr = []

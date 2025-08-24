@@ -3,15 +3,15 @@ try:
     main_path = (['C:\\Users\\jin_y\\Downloads\\codyssey\\C01\\P05\\mars_base_main_parts-001.csv', 'C:\\Users\\jin_y\\Downloads\\codyssey\\C01\\P05\\mars_base_main_parts-002.csv', 'C:\\Users\\jin_y\\Downloads\\codyssey\\C01\\P05\\mars_base_main_parts-003.csv'])
     main_list = []
 
-    a1 = np.genfromtxt(main_path[0], delimiter=',', skip_header = 1, dtype=None, encoding = 'utf-8')
-    a2 = np.genfromtxt(main_path[1], delimiter=',', skip_header = 1, dtype=None, encoding = 'utf-8')
+    a1 = np.genfromtxt(main_path[0], delimiter=',', skip_header = 1, dtype=None, encoding = 'utf-8') #dtype = 타입 자동추정
+    a2 = np.genfromtxt(main_path[1], delimiter=',', skip_header = 1, dtype=None, encoding = 'utf-8') #genfromtxt. 결측값 허용 문자열 허용
     a3 = np.genfromtxt(main_path[2], delimiter=',', skip_header = 1, dtype=None, encoding = 'utf-8')
 
-    merge_a = np.vstack((a1,a2,a3))
+    merge_a = np.vstack((a1,a2,a3)) #배열 쌓기
 
-    parts = np.unique(merge_a['f0']) 
+    parts = np.unique(merge_a['f0']) #ndarray
     for name in parts: 
-        strength_values = merge_a['f1'][merge_a['f0'] == name] # merge values
+        strength_values = merge_a['f1'][merge_a['f0'] == name] # original
         # print(f"{name}: {strength_values}")
 
     avg_list = [] # FL < 50

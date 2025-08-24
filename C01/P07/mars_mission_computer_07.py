@@ -1,6 +1,3 @@
-import platform  #system info 
-import psutil #HW resource info
-import json
 import sys
 import time
 import json
@@ -25,78 +22,43 @@ try:
             self.env_values = {'mars_base_internal_temperature' : [], 'mars_base_external_temperature' : [],
                 'mars_base_internal_humidity' : [], 'mars_base_external_illuminance' : [],
                 'mars_base_internal_co2' : [],'mars_base_internal_oxygen' : []}
+            
             DummySensor = load_dummy_sensor()
             self.ds = DummySensor()
         
 
         def get_sensor_data(self):
+            
             count = 1
             while(True):
                 if stop_flag:
                     break
                 self.ds.set_env()
-                data = self.ds.get_env() 
+                data = self.ds.get_env() #sensor vlaue
                 print('index' + str(count))
                 print(json.dumps(data, indent = 1, ensure_ascii = False))
                 count += 1
+
                 for key in self.env_values:
                     self.env_values[key].append(data[key])
+                
                 time.sleep(5)
+
                 if count % 12 == 0:
                     RunComputer.averages_5min()
-
-
+                
+            # return data
+        
         def averages_5min(self):
                 print(f"{'-'*10} < 5min_averages > {'-'*10}")
                 for key in self.env_values:  
-                    values = self.env_values[key][-12:]
+                    values = self.env_values[key][-12:] # 5*12 = 60 = 5min
                     if values:
                         avg = sum(values) / len(values)
                         print(f'{key} : {avg:.2f}')
                     else: 
                         print(f'Not enough values for the {key}.')
                 print(f"{'-'*39}\n)")
-
-
-        def get_mission_computer_info(self): 
-            self.os_info = {
-                '운영체계' : platform.system(), '운영체계 버전' : platform.version(), 
-                'CPU 종류' : platform.processor(), 'CPU 코어 수' : psutil.cpu_count(logical=False), 
-                '논리 코어 수' : psutil.cpu_count(logical=True),  
-                '메모리 크기' : f'{round(psutil.virtual_memory().total / (1024 ** 3), 2)} GB'}
-            with open('os_info', 'w', encoding = 'utf-8') as file1:
-                json.dump(self.os_info, file1, ensure_ascii=False) 
-                print('-'*8, 'JSON FILE_os', '-'*8)
-                # return self.os_info
-#bonus 
-            selected_items = self.load_settings()
-            setting_os_info = {key : value for key, value in self.os_info.items() if key in selected_items}
-            return setting_os_info #필터링 된 os 값 반환
-
-
-        def get_mission_computer_load(self): #08
-            self.hw_info = {
-                'CPU 실시간 사용량' : f'{psutil.cpu_percent(interval=1)} %',
-                '메모리 실시간 사용량' : f'{psutil.virtual_memory().percent} %'}
-            with open('hw_info', 'w', encoding = 'utf-8') as file2:
-                json.dump(self.hw_info, file2, ensure_ascii=False)
-                print('-'*8, 'JSON FILE_hw', '-'*8) 
-                # return self.hw_info 
-#bonus 
-            selected_items = self.load_settings()
-            setting_hw_info = {key : value for key, value in self.hw_info.items() if key in selected_items}
-            return setting_hw_info #필터링 된 hw 값 반환
-
-#bonus 
-        def load_settings(self,file_name = 'C:\\Users\\jin_y\\Downloads\\codyssey\\C01\\P08\\setting.txt'):
-            with open(file_name, 'r', encoding='utf-8') as file3:
-                items = [line.strip() for line in file3 if line.strip()] #line.strip() / for line in file3 / if line.strip()
-            return items
-
-
-    runComputer = MissionComputer()
-    print(runComputer.get_mission_computer_info())
-    print(runComputer.get_mission_computer_load())
 
     stop_flag = False 
     def stop_program():
@@ -107,7 +69,9 @@ try:
     keyboard.add_hotkey('q', stop_program) 
 
     RunComputer = MissionComputer()
+
     RunComputer.get_sensor_data()
+        
 
 except FileNotFoundError: 
     print('파일이 존재하지 않음.')
