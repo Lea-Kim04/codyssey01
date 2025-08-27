@@ -14,6 +14,9 @@ class WavTranscriber:
 
     def find_wav_files(self): #폴더 내 wav 파일 찾기
         wav_files = [f for f in self.folder_path.glob('*.wav')]
+        print("=== 발견된 음성 파일 목록 ===")
+        for f in wav_files:
+            print(f.name)
         return wav_files
 
     def transcribe(self): #음성인식
