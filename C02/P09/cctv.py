@@ -15,16 +15,14 @@ class MasImageHelper:
     def _extract_zip(self):
         try:
             with zipfile.ZipFile(self.zip_path, 'r') as zip_ref:
-                zip_ref.extractall(self.extract_folder)
+                zip_ref.extractall(self.extract_folder) 
             print(f"압축 해제 완료! '{self.extract_folder}' 폴더에 파일이 저장되었습니다.")
         except Exception as e:
             print(f"압축 해제 실패: {e}")
 
     def _load_images(self):
         try:
-            self.image_files = sorted(
-                list(self.extract_folder.glob("*.jpg")) + list(self.extract_folder.glob("*.png"))
-            )
+            self.image_files = sorted(list(self.extract_folder.glob("*.jpg")))
         except Exception as e:
             self.image_files = []
             print(f"이미지 로드 실패: {e}")
@@ -33,7 +31,7 @@ class MasImageHelper:
         if not self.image_files:
             return
         while True:
-            img = cv2.imread(str(self.image_files[self.index]))
+            img = cv2.imread(str(self.image_files[self.index])) #현재 이미지 로드
             if img is None:
                 self.index = (self.index + 1) % len(self.image_files)
                 continue
@@ -42,22 +40,22 @@ class MasImageHelper:
 
             key = cv2.waitKeyEx(0)
 
-            if key == 27:  # ESC → 종료
+            if key == 27:  # ESC 
                 break
-            elif key == 2424832:  # 왼쪽 방향키
+            elif key == 2424832:  # 왼
                 self.index = (self.index - 1) % len(self.image_files)
-            elif key == 2555904:  # 오른쪽 방향키
+            elif key == 2555904:  # 오
                 self.index = (self.index + 1) % len(self.image_files)
 
         cv2.destroyAllWindows()
 
-    def get_current_image_path(self):
-        if not self.image_files:
-            return None
-        return self.image_files[self.index]
+    # def get_current_image_path(self):
+    #     if not self.image_files:
+    #         return None
+    #     return self.image_files[self.index]
 
-    def get_all_image_paths(self):
-        return self.image_files or []
+    # def get_all_image_paths(self):
+    #     return self.image_files or []
 
 
 if __name__ == "__main__":

@@ -35,7 +35,7 @@ class WavTranscriber:
                 with sr.AudioFile(str(wav_file)) as source:
                     audio_data = self.recognizer.record(source)
                 
-                text = self.recognizer.recognize_google(audio_data, language='ko-KR')
+                text = self.recognizer.recognize_google(audio_data, language='ko-KR') #STT(음성 → 텍스트 변환)
                 print(f"✅ 인식 성공: {text}")
                 self.save_to_csv(wav_file, text)
             except sr.UnknownValueError:
